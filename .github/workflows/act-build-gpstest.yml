@@ -58,10 +58,11 @@ jobs:
           _ref_org_=${{ env.TAG_REF }}
           _ref_len_="${#_ref_org_}"
           _ref_=$(echo ${_ref_all_::$_ref_len_})
-          #_prg_version_=$(grep versionName "app/${{ env.PRG_NAME }}/build.gradle" | awk -F '= ' '{print $2}' | awk -F '"' '{print $2}')
-          _prg_version_base_="v"$(grep "versionName " app/build.gradle  | cut -d '"' -f2)
-          #_prg_version_=$_prg_version_base_-$(grep "versionCode" app/build.gradle  | awk '{print $3}')
-          _prg_version_=$_prg_version_base_
+          _prg_version_code_=$(grep "versionCode " ${{ env.PRG_NAME }}/build.gradle  | cut -d '"' -f2)
+          #_prg_version_=$(grep versionName "${{ env.PRG_NAME }}/build.gradle" | awk -F '= ' '{print $2}' | awk -F '"' '{print $2}')
+          _prg_version_base_="v"$(grep "versionName " ${{ env.PRG_NAME }}/build.gradle  | cut -d '"' -f2)
+          #_prg_version_=$_prg_version_base_-$(grep "versionCode" ${{ env.PRG_NAME }}/build.gradle  | awk '{print $3}')
+          _prg_version_=$_prg_version_base_.$_prg_version_code_
           echo "TAG_REF=$_ref_" >> $GITHUB_ENV
           _build_=${{ env.TAG_BUILD }}.$_ref_
           echo "TAG_BUILD=$_build_" >> $GITHUB_ENV
@@ -83,17 +84,17 @@ jobs:
         shell: bash
         run: |
           #set -x;
-          sed -i '/^    signingConfigs {$/,/^    }$/d' app/build.gradle;
-          sed -i '/signingConfig signingConfigs.release/d' app/build.gradle;
-          #sed -i '/^def keystoreProperties = new Properties()$/,/^keystoreProperties.load(new FileInputStream(rootProject.file(\"keystore.properties\")))$/d' app/build.gradle;
-          sed -i '/^def keystorePropertiesFile = rootProject.file(\"keystore.properties\")$/d' app/build.gradle;
-          sed -i '/^def keystoreProperties = new Properties()/d' app/build.gradle;
-          sed -i '/^keystoreProperties.load(new FileInputStream(keystorePropertiesFile))/d' app/build.gradle;
+          sed -i '/^    signingConfigs {$/,/^    }$/d' ${{ env.PRG_NAME }}/build.gradle;
+          sed -i '/signingConfig signingConfigs.release/d' ${{ env.PRG_NAME }}/build.gradle;
+          #sed -i '/^def keystoreProperties = new Properties()$/,/^keystoreProperties.load(new FileInputStream(rootProject.file(\"keystore.properties\")))$/d' ${{ env.PRG_NAME }}/build.gradle;
+          sed -i '/^def keystorePropertiesFile = rootProject.file(\"keystore.properties\")$/d' ${{ env.PRG_NAME }}/build.gradle;
+          sed -i '/^def keystoreProperties = new Properties()/d' ${{ env.PRG_NAME }}/build.gradle;
+          sed -i '/^keystoreProperties.load(new FileInputStream(keystorePropertiesFile))/d' ${{ env.PRG_NAME }}/build.gradle;
           echo "sign ... ";
-          grep -i sign app/build.gradle || true;
+          grep -i sign ${{ env.PRG_NAME }}/build.gradle || true;
           sleep 2
           echo "keystore ... ";
-          grep keystore app/build.gradle || true;
+          grep keystore ${{ env.PRG_NAME }}/build.gradle || true;
           echo "... done";
 
 # patch1 begin
