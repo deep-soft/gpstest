@@ -204,16 +204,16 @@ jobs:
         with:
           name: upload-artifact
           path: |
-            ./app/build/outputs/apk/release/
+            ./{{ env.PRG_NAME }}/build/outputs/apk/osmdroid/release/
 
       - name: Copy apk from outputs/
         shell: bash
         run: |
           set -x
           mkdir -p signed-apk
-          echo "LIST: " ./app/build/outputs/apk/release/
-          ls -l ./app/build/outputs/apk/release/
-          cp ./app/build/outputs/apk/release/* ${{ env.SIGNED_APK_FOLDER }}
+          echo "LIST: " ./{{ env.PRG_NAME }}/build/outputs/apk/osmdroid/release/
+          ls -l ./{{ env.PRG_NAME }}/build/outputs/apk/osmdroid/release/
+          cp ./{{ env.PRG_NAME }}/build/outputs/apk/osmdroid/release/* ${{ env.SIGNED_APK_FOLDER }}
           echo "LIST: " ${{ env.SIGNED_APK_FOLDER }}
           ls -l ${{ env.SIGNED_APK_FOLDER }}
           #mv ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}${{env.PRG_VERSION_suffix}}-${{ env.PRG_FLAVOR }}-release-unsigned.apk ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_FLAVOR }}-release.apk
