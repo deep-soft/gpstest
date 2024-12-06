@@ -18,6 +18,7 @@ env:
   PRG_NAME: "GPSTest"
   PRG_VERSION: "v1.100"
   PRG_VERSION_suffix: "a"
+  PRG_VERSION_CODE: "10000"
   PRG_FLAVOR: "github"
   TAG_NAME: "GPSTest"
   TAG_VERSION: "v1.100"
@@ -65,12 +66,13 @@ jobs:
           #_prg_version_base_="v"$(grep "versionName " ${{ env.PRG_NAME }}/build.gradle  | cut -d '"' -f2)
           
           #_prg_version_=$_prg_version_base_-$(grep "versionCode" ${{ env.PRG_NAME }}/build.gradle  | awk '{print $3}')
-          _prg_version_=$_prg_version_base_.$_prg_version_code_
+          _prg_version_=$_prg_version_base_
           
           echo "TAG_REF=$_ref_" >> $GITHUB_ENV
           _build_=${{ env.TAG_BUILD }}.$_ref_
           echo "TAG_BUILD=$_build_" >> $GITHUB_ENV
           echo "PRG_VERSION=$_prg_version_" >> $GITHUB_ENV
+          echo "PRG_VERSION_CODE=$_prg_version_code_" >> $GITHUB_ENV
           echo "TAG_VERSION=$_prg_version_" >> $GITHUB_ENV
 
       - name: Print ref, build version
@@ -78,10 +80,11 @@ jobs:
         run: |
           echo "NAM: ${{ env.PRG_NAME }}"
           echo "VER: ${{ env.PRG_VERSION }}"
+          echo "COD: ${{ env.PRG_VERSION_CODE }}"
           echo "TAG: ${{ env.TAG_VERSION }}"
           echo "REF: ${{ env.TAG_REF }}"
           echo "BLD: ${{ env.TAG_BUILD }}"
-          echo "${{ env.PRG_NAME }}-src-${{ env.PRG_VERSION }}-${{ env.TAG_BUILD }}" > _tag_name_.txt
+          echo "${{ env.PRG_NAME }}-src-${{ env.PRG_VERSION }}-${{ env.PRG_VERSION_CODE }}-${{ env.TAG_BUILD }}" > _tag_name_.txt
 
 # signingConfig signingConfigs.release
       - name: skip sign
@@ -217,8 +220,9 @@ jobs:
           echo "LIST: " ${{ env.SIGNED_APK_FOLDER }}
           ls -l ${{ env.SIGNED_APK_FOLDER }}
           #mv ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}${{env.PRG_VERSION_suffix}}-${{ env.PRG_FLAVOR }}-release-unsigned.apk ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_FLAVOR }}-release.apk
-          mv ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-release-unsigned.apk ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_FLAVOR }}-release.apk
-          echo "LIST: " ${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_FLAVOR }}-release.apk
+          #mv ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-release-unsigned.apk ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_VERSION_CODE }}-${{ env.PRG_FLAVOR }}-release.apk
+          mv ${{ env.SIGNED_APK_FOLDER }}osmdroidRelease-${{ env.PRG_VERSION }}.apk ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_VERSION_CODE }}-${{ env.PRG_FLAVOR }}-release.apk
+          echo "LIST: " ${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_VERSION_CODE }}-${{ env.PRG_FLAVOR }}-release.apk || true;
           ls -l ${{ env.SIGNED_APK_FOLDER }}
 
       - uses: deep-soft/sign-android-release@v1
