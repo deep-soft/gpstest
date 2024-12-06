@@ -58,11 +58,15 @@ jobs:
           _ref_org_=${{ env.TAG_REF }}
           _ref_len_="${#_ref_org_}"
           _ref_=$(echo ${_ref_all_::$_ref_len_})
-          _prg_version_code_=$(grep "versionCode " ${{ env.PRG_NAME }}/build.gradle  | cut -d '"' -f2)
-          #_prg_version_=$(grep versionName "${{ env.PRG_NAME }}/build.gradle" | awk -F '= ' '{print $2}' | awk -F '"' '{print $2}')
-          _prg_version_base_="v"$(grep "versionName " ${{ env.PRG_NAME }}/build.gradle  | cut -d '"' -f2)
+          #_prg_version_code_=$(grep "  versionCode " ${{ env.PRG_NAME }}/build.gradle  | cut -d '"' -f2)
+          _prg_version_code_=$(grep "  versionCode " ${{ env.PRG_NAME }}/build.gradle   | awk -F ' ' '{print $2}')
+          
+          _prg_version_base_="v"$(grep versionName ${{ env.PRG_NAME }}/build.gradle | awk -F ' ' '{print $2}' | awk -F '"' '{print $2}')
+          #_prg_version_base_="v"$(grep "versionName " ${{ env.PRG_NAME }}/build.gradle  | cut -d '"' -f2)
+          
           #_prg_version_=$_prg_version_base_-$(grep "versionCode" ${{ env.PRG_NAME }}/build.gradle  | awk '{print $3}')
           _prg_version_=$_prg_version_base_.$_prg_version_code_
+          
           echo "TAG_REF=$_ref_" >> $GITHUB_ENV
           _build_=${{ env.TAG_BUILD }}.$_ref_
           echo "TAG_BUILD=$_build_" >> $GITHUB_ENV
