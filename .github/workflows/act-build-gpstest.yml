@@ -168,7 +168,7 @@ jobs:
 
       - name: gradle  Assemble Release
         run: |
-          ./gradlew assembleRelease
+          ./gradlew assembleOsmdroidRelease
 
 # zip release begin
       - name: Create Archive ALL
