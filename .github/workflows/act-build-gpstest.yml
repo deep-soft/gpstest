@@ -159,14 +159,16 @@ jobs:
       - name: Setup java (v3)
         uses: deep-soft/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
+          distribution: 'temurin'
+          java-version: '17'
+          cache: gradle
 
       - name: gradle build (v2)
         uses: deep-soft/gradle-build-action@v3
 
-      - name: gradle  Assemble github Release
-        run: ./gradlew assembleRelease
+      - name: gradle  Assemble Release
+        run: |
+          ./gradlew assembleRelease
 
 # zip release begin
       - name: Create Archive ALL
