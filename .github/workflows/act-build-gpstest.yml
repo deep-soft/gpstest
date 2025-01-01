@@ -216,7 +216,7 @@ jobs:
           mkdir -p signed-apk
           echo "LIST: " ./${{ env.PRG_NAME }}/build/outputs/apk/osmdroid/release/
           ls -l ./${{ env.PRG_NAME }}/build/outputs/apk/osmdroid/release/
-          cp ./${{ env.PRG_NAME }}/build/outputs/apk/osmdroid/release/* ${{ env.SIGNED_APK_FOLDER }}
+          cp ./${{ env.PRG_NAME }}/build/outputs/apk/osmdroid/release/*.apk ${{ env.SIGNED_APK_FOLDER }}
           echo "LIST: " ${{ env.SIGNED_APK_FOLDER }}
           ls -l ${{ env.SIGNED_APK_FOLDER }}
           #mv ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}${{env.PRG_VERSION_suffix}}-${{ env.PRG_FLAVOR }}-release-unsigned.apk ${{ env.SIGNED_APK_FOLDER }}${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_FLAVOR }}-release.apk
