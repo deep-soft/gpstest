@@ -44,23 +44,23 @@ import com.android.gpstest.Application
 import com.android.gpstest.Application.Companion.app
 import com.android.gpstest.Application.Companion.prefs
 import com.android.gpstest.R
-import com.android.gpstest.library.data.FixState
-import com.android.gpstest.library.data.LocationRepository
 import com.android.gpstest.databinding.GpsSkyBinding
 import com.android.gpstest.databinding.GpsSkyLegendCardBinding
 import com.android.gpstest.databinding.GpsSkySignalMeterBinding
+import com.android.gpstest.library.data.FixState
+import com.android.gpstest.library.data.LocationRepository
 import com.android.gpstest.library.model.SatelliteMetadata
 import com.android.gpstest.library.model.SatelliteStatus
 import com.android.gpstest.library.ui.SignalInfoViewModel
-import com.android.gpstest.ui.status.Filter
-import com.android.gpstest.ui.theme.AppTheme
+import com.android.gpstest.library.util.LibUIUtils
 import com.android.gpstest.library.util.MathUtils
 import com.android.gpstest.library.util.PreferenceUtil
 import com.android.gpstest.library.util.PreferenceUtil.darkTheme
 import com.android.gpstest.library.util.PreferenceUtils
 import com.android.gpstest.library.util.PreferenceUtils.clearGnssFilter
 import com.android.gpstest.library.util.PreferenceUtils.gnssFilter
-import com.android.gpstest.library.util.LibUIUtils
+import com.android.gpstest.ui.status.Filter
+import com.android.gpstest.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -314,7 +314,9 @@ class SkyFragment : Fragment() {
             legend.skyLegendShapeLine15a,
             legend.skyLegendShapeLine15b,
             legend.skyLegendShapeLine16a,
-            legend.skyLegendShapeLine16b
+            legend.skyLegendShapeLine16b,
+            legend.skyLegendShapeLine17a,
+            legend.skyLegendShapeLine17b
         )
 
         // Shape Legend shapes
@@ -331,7 +333,8 @@ class SkyFragment : Fragment() {
             legend.skyLegendDiamond4,
             legend.skyLegendDiamond5,
             legend.skyLegendDiamond6,
-            legend.skyLegendDiamond7
+            legend.skyLegendDiamond7,
+            legend.skyLegendDiamond8
         )
     }
 
